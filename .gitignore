@@ -39,3 +39,7 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+refactor.py
+openapi_test.json
+test_tortoise.py
