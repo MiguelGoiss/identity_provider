@@ -1,0 +1,41 @@
+# Ambientes Virtuais (Virtual Environments)
+.venv/
+venv/
+env/
+ENV/
+*.venv/
+*venv/
+
+# Caches e ficheiros compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Configurações de Ambiente (Secrets / Credentials)
+.env
+.env.*
+!.env.example
+
+# Pastas de desenvolvimento/temporárias e uploads
+scratch/
+uploads/
+
+# Ficheiros de dados / Importações (PII Security)
+output.xlsx
+*.xlsx
+*.csv
+
+# Ficheiros do Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Configurações de IDEs (VS Code, PyCharm, etc.)
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

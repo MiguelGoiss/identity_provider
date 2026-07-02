@@ -1,0 +1,15 @@
+from .user.user_router import router as user_router
+from .company.company_router import router as company_router
+from .local.local_router import router as local_router
+from .auth.auth_router import router as auth_router
+from .auth.jwks import router as jwks_router
+from .roles.role_router import router as role_router
+from .permissions.permission_router import router as permission_router
+from .app_windows.app_window_router import router as app_window_router
+from .org_unit_types.org_unit_type_router import router as org_unit_type_router
+from .org_units.org_unit_router import router as org_unit_router
+from .applications.application_router import router as application_router
+from .user_app_access.user_app_access_router import router as user_app_access_router
+from .internal.internal_router import router as internal_router
+from .service_api_keys.service_api_key_router import router as service_api_key_router
+from .uploads.uploads_router import router as uploads_router
