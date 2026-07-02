@@ -59,58 +59,23 @@ async def unsupported_filter_exception_handler(request: Request, exc: Unsupporte
 from app.dependencies import verify_internal_access, VerifyInternalAccess
 
 # --- 5. Routers ---
-from app.routers import (
-  user_router,
-  company_router,
-  local_router,
-  auth_router,
-  jwks_router,
-  role_router,
-  permission_router,
-  app_window_router,
-  org_unit_type_router,
-  org_unit_router,
-  application_router,
-  user_app_access_router,
-  internal_router,
-  service_api_key_router,
-  uploads_router
-)
+from app.api.v1 import api_router
 
-app.include_router(jwks_router)
-app.include_router(auth_router)
-
-internal_admin_dependency = Depends(VerifyInternalAccess(["internal:admin"]))
-
-# Adiciona o router principal das aplicações que contém as sub-rotas
-app.include_router(user_router, prefix="/api/v1", dependencies=[internal_admin_dependency])
-app.include_router(company_router, prefix="/api/v1", dependencies=[internal_admin_dependency])
-app.include_router(local_router, prefix="/api/v1", dependencies=[internal_admin_dependency])
-app.include_router(role_router, prefix="/api/v1")
-app.include_router(permission_router, prefix="/api/v1")
-app.include_router(app_window_router, prefix="/api/v1")
-app.include_router(service_api_key_router, prefix="/api/v1")
-app.include_router(uploads_router)
-
-app.include_router(org_unit_type_router, prefix="/api/v1", dependencies=[internal_admin_dependency])
-app.include_router(org_unit_router, prefix="/api/v1", dependencies=[internal_admin_dependency])
-app.include_router(application_router, prefix="/api/v1", dependencies=[internal_admin_dependency])
-app.include_router(user_app_access_router, prefix="/api/v1", dependencies=[internal_admin_dependency])
-app.include_router(internal_router, dependencies=[internal_admin_dependency])
+app.include_router(api_router)
 
 # --- 5. Base Endpoints ---
-@app.get("/", tags=["System"])
-async def root():
-  """
-  Root endpoint to verify the service is reachable.
-  """
-  return {
-    "service": "Auth Service", 
-    "status": "operational",
-    "documentation": "/docs"
-  }
+# @app.get("/", tags=["System"])
+# async def root():
+#   """
+#   Root endpoint to verify the service is reachable.
+#   """
+#   return {
+#     "service": "Auth Service", 
+#     "status": "operational",
+#     "documentation": "/docs"
+#   }
 
-@app.get("/health", tags=["System"])
+@app.get("/api_healthz", tags=["System"])
 async def health_check():
   """
   Health check for Docker/Kubernetes probes.

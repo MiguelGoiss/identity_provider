@@ -14,12 +14,12 @@ class TestOTPAuthentication(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         self.client = TestClient(app)
 
-    @patch("app.routers.auth.auth_router.User.filter")
-    @patch("app.routers.auth.auth_router.User.get", new_callable=AsyncMock)
-    @patch("app.routers.auth.auth_router.UserEmail.get_or_none")
-    @patch("app.routers.auth.auth_router.UserEmail.filter")
-    @patch("app.routers.auth.auth_router.send_otp_email", new_callable=AsyncMock)
-    @patch("app.routers.auth.auth_router.get_password_hash")
+    @patch("app.api.v1.endpoints.auth.auth_router.User.filter")
+    @patch("app.api.v1.endpoints.auth.auth_router.User.get", new_callable=AsyncMock)
+    @patch("app.api.v1.endpoints.auth.auth_router.UserEmail.get_or_none")
+    @patch("app.api.v1.endpoints.auth.auth_router.UserEmail.filter")
+    @patch("app.api.v1.endpoints.auth.auth_router.send_otp_email", new_callable=AsyncMock)
+    @patch("app.api.v1.endpoints.auth.auth_router.get_password_hash")
     async def test_validate_identifier_collaborator_success(self, mock_hash, mock_send_email, mock_filter, mock_get_email, mock_user_get, mock_user_filter):
         # Setup mock user and email
         mock_user = MagicMock()
@@ -66,9 +66,9 @@ class TestOTPAuthentication(unittest.IsolatedAsyncioTestCase):
         mock_user_filter_qs.update.assert_called_once()
         mock_send_email.assert_called_once()
 
-    @patch("app.routers.auth.auth_router.User.get", new_callable=AsyncMock)
-    @patch("app.routers.auth.auth_router.UserEmail.get_or_none")
-    @patch("app.routers.auth.auth_router.UserEmail.filter")
+    @patch("app.api.v1.endpoints.auth.auth_router.User.get", new_callable=AsyncMock)
+    @patch("app.api.v1.endpoints.auth.auth_router.UserEmail.get_or_none")
+    @patch("app.api.v1.endpoints.auth.auth_router.UserEmail.filter")
     async def test_validate_identifier_agent_success(self, mock_filter, mock_get_email, mock_user_get):
         # Setup mock user and email
         mock_user = MagicMock()
@@ -97,9 +97,9 @@ class TestOTPAuthentication(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(data["is_user"])
         self.assertFalse(data["is_collaborator"])
 
-    @patch("app.routers.auth.auth_router.User.get_or_none")
-    @patch("app.routers.auth.auth_router.UserEmail.get_or_none")
-    @patch("app.routers.auth.auth_router.UserEmail.filter")
+    @patch("app.api.v1.endpoints.auth.auth_router.User.get_or_none")
+    @patch("app.api.v1.endpoints.auth.auth_router.UserEmail.get_or_none")
+    @patch("app.api.v1.endpoints.auth.auth_router.UserEmail.filter")
     async def test_validate_identifier_not_found(self, mock_filter, mock_get_email, mock_user_get):
         # Mock get_or_none returning a chain that ends in None
         mock_qs = MagicMock()
@@ -128,11 +128,11 @@ class TestOTPAuthentication(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(data["is_user"])
         self.assertTrue(data["is_collaborator"])
 
-    @patch("app.routers.auth.auth_router.User.filter")
-    @patch("app.routers.auth.auth_router.User.get", new_callable=AsyncMock)
-    @patch("app.routers.auth.auth_router.UserEmail.get_or_none")
-    @patch("app.routers.auth.auth_router.verify_password")
-    @patch("app.routers.auth.auth_router.RoleRepository.get_user_permissions", new_callable=AsyncMock)
+    @patch("app.api.v1.endpoints.auth.auth_router.User.filter")
+    @patch("app.api.v1.endpoints.auth.auth_router.User.get", new_callable=AsyncMock)
+    @patch("app.api.v1.endpoints.auth.auth_router.UserEmail.get_or_none")
+    @patch("app.api.v1.endpoints.auth.auth_router.verify_password")
+    @patch("app.api.v1.endpoints.auth.auth_router.RoleRepository.get_user_permissions", new_callable=AsyncMock)
     async def test_login_collaborator_incorrect_otp(self, mock_perms, mock_verify, mock_get_email, mock_user_get, mock_user_filter):
         # Setup mock user and email
         mock_user = MagicMock()

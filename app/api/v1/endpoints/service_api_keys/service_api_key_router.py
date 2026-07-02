@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, Query, Path, HTTPException, status
 
 from app.database.models.user import User
-from app.routers.auth.auth_router import get_current_active_user
+from app.api.v1.endpoints.auth.auth_router import get_current_active_user
 from app.core.permissions import PermissionChecker
 from app.services.service_api_key.service_api_key_service import ServiceApiKeyService
 from app.schemas.service_api_key_schemas import (
